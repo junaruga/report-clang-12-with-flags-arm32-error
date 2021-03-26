@@ -11,15 +11,16 @@ BuildRequires: clang
 %prep
 cat > test.c <<EOF
 int main(void) {
-    int class=0;
-    return class;
+    return 0;
 }
 EOF
 
 %build
 clang --version
 clang++ --version
-clang test.c -o test -flto -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS --config /usr/lib/rpm/redhat/redhat-hardened-clang.cfg -fstack-protector-strong -march=armv7-a -mfpu=vfpv3-d16 -mtune=generic-armv7-a -mabi=aapcs-linux -mfloat-abi=hard -pipe -D_FILE_OFFSET_BITS=64
+
+%global toolchain clang
+clang test.c -o test %{build_cflags}
 
 %install
 mkdir -p %{buildroot}/%{_bindir}
