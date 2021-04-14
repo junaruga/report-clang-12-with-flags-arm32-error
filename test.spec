@@ -1,3 +1,9 @@
+# Avoid using the -flto flag that causes the segmentation fault on ARM 32 bit.
+# https://bugzilla.redhat.com/show_bug.cgi?id=1918924#c2
+%ifarch %{arm}
+%global _lto_cflags %{nil}
+%endif
+
 Name: test
 Version: 1
 Release: 1%{?dist}
